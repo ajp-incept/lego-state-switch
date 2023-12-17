@@ -15,12 +15,6 @@ function createData(orderid, description, schedule) {
   return { orderid, description, schedule };
 }
 
-const rows = [
-  createData('12898', 'Type X, Mold Y', '2021-10-10 10:10:10'),
-  createData('12984', 'Type L, Mold H', '2021-10-13 10:10:10'),
-  createData('13984', 'Type P, Mold S', '2021-10-15 10:10:10'),
-];
-
 function OrderSection(props) {
   const [orders, setOrders] = React.useState([]);
 

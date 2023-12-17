@@ -4,7 +4,6 @@ import { CardHeader } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import StatesSection from './StatesSection';
 
@@ -16,6 +15,7 @@ function StatusSection(props) {
         title={"Order: "+props.title}
         style={{backgroundColor:props.color,color:props.fontColor}}
         subheader={"Started : "+props.started}
+        subheaderTypographyProps={{style:{color: 'white'}}}
       />
       <CardContent>
              <List>

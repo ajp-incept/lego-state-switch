@@ -1,19 +1,11 @@
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import { CardHeader } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import StepButton from "@mui/material/StepButton"; 
 import Grid from '@mui/material/Grid';
 
-const steps = ['Standing still', 'Stating Up', 'Producing normally', 'Winding down'];
-const stepsColors = ['red', 'yellow', 'green', 'yellow'];
 const objectSteps = [
     {
         name: 'Standing still',
@@ -37,20 +29,6 @@ const objectSteps = [
     }
 ]
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <div></div>;
-    case 1:
-      return <div></div>;
-    case 2:
-      return <div></div>;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
-//create function that receives color and returns a circle with that color
 function Circle(props) {
     return (
         <svg height="24" width="24">
@@ -62,12 +40,8 @@ function Circle(props) {
 function StatesSection(props) {
     const [activeStep, setActiveStep] = React.useState(0); 
     const [nextStep, setNextStep] = React.useState("Starting up");
-    const [completed, setCompleted] = React.useState({}); 
     const [nextStepColor, setNextStepColor] = React.useState("yellow");
     const [nextStepColorFont, setnextStepColorFont] = React.useState("black");
-
-    console.log("paso aqui")
-    console.log(props.isLogged);
   
     const handleStep = (step) => () => { 
         setActiveStep(step); 
@@ -106,7 +80,7 @@ function StatesSection(props) {
                             {objectSteps.map((obj, index) => ( 
                                 <Step 
                                     style={(index === activeStep) ? {opacity:"1"}:{opacity:"0.5"}}
-                                    key={obj.name} completed={completed[index]}> 
+                                    key={obj.name}> 
                                     <StepButton
                                         disabled={!props.isLogged}
                                         icon={<><Circle color={obj.color}/></>} 
