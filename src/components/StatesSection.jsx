@@ -10,8 +10,32 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import StepButton from "@mui/material/StepButton"; 
+import Grid from '@mui/material/Grid';
 
-const steps = ['Standing still', 'Stating Up', 'Producing normally'];
+const steps = ['Standing still', 'Stating Up', 'Producing normally', 'Winding down'];
+const stepsColors = ['red', 'yellow', 'green', 'yellow'];
+const objectSteps = [
+    {
+        name: 'Standing still',
+        color: 'red',
+        fontColor: 'white',
+    },
+    {
+        name: 'Starting Up',
+        color: 'yellow',
+        fontColor: 'black',
+    },
+    {
+        name: 'Producing normally',
+        color: 'green',
+        fontColor: 'white',
+    },
+    {
+        name: 'Winding down',
+        color: 'yellow',
+        fontColor: 'black',
+    }
+]
 
 function getStepContent(step) {
   switch (step) {
@@ -26,129 +50,88 @@ function getStepContent(step) {
   }
 }
 
+//create function that receives color and returns a circle with that color
+function Circle(props) {
+    return (
+        <svg height="24" width="24">
+        <circle cx="12" cy="12" r="12" fill={props.color} />
+        </svg>
+    )
+}
+
 function StatesSection(props) {
-  const [activeStep, setActiveStep] = React.useState(0); 
+    const [activeStep, setActiveStep] = React.useState(0); 
+    const [nextStep, setNextStep] = React.useState("Starting up");
     const [completed, setCompleted] = React.useState({}); 
-  
-    const totalSteps = () => { 
-        return steps.length; 
-    }; 
-  
-    const completedSteps = () => { 
-        return Object.keys(completed).length; 
-    }; 
-  
-    const isLastStep = () => { 
-        return activeStep === totalSteps() - 1; 
-    }; 
-  
-    const allStepsCompleted = () => { 
-        return completedSteps() === totalSteps(); 
-    }; 
-  
-    const handleNext = () => { 
-        const newActiveStep = 
-            isLastStep() && !allStepsCompleted() 
-                ? // It's the last step, but not all  
-                // steps have been completed, 
-                // find the first step that has been completed 
-                steps.findIndex((step, i) => !(i in completed)) 
-                : activeStep + 1; 
-        setActiveStep(newActiveStep); 
-    }; 
-  
-    const handleBack = () => { 
-        setActiveStep((prevActiveStep) => prevActiveStep - 1); 
-    }; 
+    const [nextStepColor, setNextStepColor] = React.useState("yellow");
+    const [nextStepColorFont, setnextStepColorFont] = React.useState("black");
+
+    console.log("paso aqui")
+    console.log(props.isLogged);
   
     const handleStep = (step) => () => { 
         setActiveStep(step); 
     }; 
-  
-    const handleComplete = () => { 
-        const newCompleted = completed; 
-        newCompleted[activeStep] = true; 
-        setCompleted(newCompleted); 
-        handleNext(); 
-    }; 
-  
-    const handleReset = () => { 
-        setActiveStep(0); 
-        setCompleted({}); 
-    }; 
 
-  return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardHeader
-        title={props.title}
-        style={{backgroundColor:'#ffd500',color:'#3c3c3b'}}
-      />
-      <CardContent>
-            <Box sx={{ width: "80%", margin: "auto" }}> 
-                <Stepper nonLinear activeStep={activeStep} orientation="vertical"> 
-                    {steps.map((label, index) => ( 
-                        <Step key={label} completed={completed[index]}> 
-                            <StepButton color="inherit" 
-                                onClick={handleStep(index)}> 
-                                {label} 
-                            </StepButton> 
-                        </Step> 
-                    ))} 
-                </Stepper> 
-                {/*<div> 
-                    {allStepsCompleted() ? ( 
-                        <React.Fragment> 
-                            <Typography sx={{ mt: 2, mb: 1 }}> 
-                                All steps completed - you're finished 
-                            </Typography> 
-                            <Box sx={{ display: "flex",  
-                                flexDirection: "row", pt: 2 }}> 
-                                <Box sx={{ flex: "1 1 auto" }} /> 
-                                <Button onClick={handleReset}>Reset</Button> 
-                            </Box> 
-                        </React.Fragment> 
-                    ) : ( 
-                        <React.Fragment> 
-                            <Typography sx={{ mt: 2, mb: 1 }}> 
-                                Step {activeStep + 1} 
-                            </Typography> 
-                            <Box sx={{ display: "flex",  
-                                flexDirection: "row", pt: 2 }}> 
-                                <Button 
-                                    color="inherit"
-                                    disabled={activeStep === 0} 
-                                    onClick={handleBack} 
-                                    sx={{ mr: 1 }} 
-                                > 
-                                    Back 
-                                </Button> 
-                                <Box sx={{ flex: "1 1 auto" }} /> 
-                                <Button onClick={handleNext} sx={{ mr: 1 }}> 
-                                    Next 
-                                </Button> 
-                                {activeStep !== steps.length && 
-                                    (completed[activeStep] ? ( 
-                                        <Typography 
-                                            variant="caption"
-                                            sx={{ display: "inline-block" }} 
-                                        > 
-                                        Step {activeStep + 1} already completed 
-                                        </Typography> 
-                                    ) : ( 
-                                        <Button onClick={handleComplete}> 
-                                            {completedSteps() === totalSteps() - 1 
-                                                ? "Finish"
-                                                : "Complete Step"} 
-                                        </Button> 
-                                    ))} 
-                            </Box> 
-                        </React.Fragment> 
-                    )} 
-                                            </div> */}
-            </Box> 
-      </CardContent>
-    </Card>
-  );
+    const goNextStep = () => {
+        console.log(activeStep);
+        if (activeStep === 0) {
+            setActiveStep(1);
+            setNextStep("Producing normally");
+            setNextStepColor("green");
+            setnextStepColorFont("white");
+        } else if (activeStep === 1) {
+            setActiveStep(2);
+            setNextStep("Winding down");
+            setNextStepColor("yellow");
+            setnextStepColorFont("black");
+        } else if (activeStep === 2) {
+            setActiveStep(3);
+            setNextStep("Standing Still");
+            setNextStepColor("red");
+            setnextStepColorFont("white");
+        } else if (activeStep === 3) {
+            setActiveStep(0);
+            setNextStep("Starting Up");
+            setNextStepColor("yellow");
+            setnextStepColorFont("black");
+        }
+    }
+
+    return (
+            <Grid container spacing={2} alignItems="center">
+                <Grid item xs={12} >
+                    <Box sx={{ width: "80%", margin: "auto" }}> 
+                        <Stepper nonLinear activeStep={activeStep}> 
+                            {objectSteps.map((obj, index) => ( 
+                                <Step 
+                                    style={(index === activeStep) ? {opacity:"1"}:{opacity:"0.5"}}
+                                    key={obj.name} completed={completed[index]}> 
+                                    <StepButton
+                                        disabled={!props.isLogged}
+                                        icon={<><Circle color={obj.color}/></>} 
+                                        color="inherit" 
+                                        onClick={handleStep(index)}> 
+                                        {obj.name} 
+                                    </StepButton> 
+                                </Step> 
+                            ))} 
+                        </Stepper> 
+                    </Box> 
+                </Grid>
+                <Grid item xs={12}>
+                    <Box display="flex" justifyContent="center">
+                    <Button 
+                    variant="contained" 
+                    style={{backgroundColor: nextStepColor, 
+                        color: nextStepColorFont,
+                        opacity: (props.isLogged) ? "1" : "0.5"}}
+                    disabled={!props.isLogged}
+                    onClick={(e) => goNextStep()}>Next: {nextStep}</Button>
+                    </Box>
+                </Grid>
+            </Grid>
+    );
 }
 
 export default StatesSection;

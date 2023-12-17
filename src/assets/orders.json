@@ -1,5 +1,4 @@
-{
-    "orders": [
+[
       {
         "orderID": "9742",
         "description": "Type A, Mold Z",
@@ -9,33 +8,32 @@
       {
         "orderID": "7700",
         "description": "Type A, Mold X",
-        "equipmentID": "26648",
+        "equipmentID": "87385",
         "estimatedSchedule": "2023-06-02 07:54:20"
       },
       {
         "orderID": "8081",
         "description": "Type A, Mold Z",
-        "equipmentID": "29944",
+        "equipmentID": "87385",
         "estimatedSchedule": "2023-12-03 11:02:00"
       },
       {
         "orderID": "5024",
         "description": "Type B, Mold Z",
-        "equipmentID": "38890",
+        "equipmentID": "87385",
         "estimatedSchedule": "2023-07-14 01:22:10"
       },
       {
         "orderID": "6312",
         "description": "Type A, Mold Z",
-        "equipmentID": "63684",
+        "equipmentID": "87385",
         "estimatedSchedule": "2023-10-15 01:34:02"
       },
       {
         "orderID": "1746",
         "description": "Type B, Mold Z",
-        "equipmentID": "49041",
+        "equipmentID": "87385",
         "estimatedSchedule": "2023-05-09 14:18:28"
       }
-    ]
-  }
+]
   

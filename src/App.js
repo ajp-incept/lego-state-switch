@@ -9,22 +9,17 @@ import Grid from '@mui/material/Grid';
 import StatusSection from './components/StatusSection';
 import OrderSection from './components/OrderSection';
 import ProfileSection from './components/ProfileSection';
-import StatesSection from './components/StatesSection';
+import ordersData from './assets/orders.json';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 export default function Checkout() {
+  const [isLogged, setIsLogged] = React.useState(false);
+  const [orders, setOrders] = React.useState(ordersData);
+
+  const logginFucntion = () => {
+    setIsLogged(!isLogged);
+    console.log(isLogged);
+  }
   
   return (
     <React.Fragment>
@@ -49,42 +44,33 @@ export default function Checkout() {
       </AppBar>
       <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
         <Grid container spacing={2}>
-          <Grid item xs={6} style={{marginTop:"50px"}}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <StatusSection 
-                title="Current Order"
+          <Grid item xs={12} style={{marginTop:"50px"}}>
+            <ProfileSection
+            login={logginFucntion}
+            isLogged={isLogged}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <StatusSection 
+                title={orders[0]?.orderID}
+                equipmentID={orders[0]?.equipmentID}
+                description={orders[0]?.description}
                 started="10/10/2021 10:00 AM"
                 color='#009641'
                 fontColor="white"
-                 />                
-              </Grid>
-              <Grid item xs={12}>
-                <OrderSection 
+                isLogged={isLogged}
+                 />  
+          </Grid>
+          <Grid item xs={12} style={{marginTop:"20px"}}>
+          <OrderSection 
                 title="Next Orders"
                 color='#009641'
                 fontColor="white"
+                orders={orders}
                  />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={6} style={{marginTop:"50px"}}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <ProfileSection 
-                 />
-              </Grid>
-              <Grid item xs={12}>
-                <StatesSection 
-                title="States"
-                color="secondary"
-                fontColor="fontcolor"
-                 />
-              </Grid>
-            </Grid>
+                
           </Grid>
         </Grid>
-        <Copyright />
       </Container>
     </React.Fragment>
   );

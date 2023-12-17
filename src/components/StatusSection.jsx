@@ -6,13 +6,14 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import StatesSection from './StatesSection';
 
 function StatusSection(props) {
 
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardHeader
-        title={props.title}
+        title={"Order: "+props.title}
         style={{backgroundColor:props.color,color:props.fontColor}}
         subheader={"Started : "+props.started}
       />
@@ -20,24 +21,20 @@ function StatusSection(props) {
              <List>
                 <ListItem>
                   <ListItemText
-                    primary={<><b>Description:</b> Type X, Mold Y</>}
+                    primary={<><b>Description:</b> {props.description}</>}
                   />
                 </ListItem>
-                <ListItem>
+                <ListItem style={{display:"block"}}>
                     <ListItemText
-                        primary={<><b>Status:</b> Standing still</>}
+                        primary={<><b>Status:</b></>}
                         style={{flex: 'inherit',marginRight:'10px'}}
                     />
-                    <ListItemIcon>
-                        <svg height="24" width="24">
-                        <circle cx="12" cy="12" r="12" fill="red" />
-                        </svg>
-                    </ListItemIcon>
-                </ListItem>
-                <ListItem>
-                  <ListItemText
-                    primary={<><b>Started:</b> 2021-10-10 10:10:10Y</>}
-                  />
+                    <StatesSection 
+                      title="States"
+                      color="secondary"
+                      fontColor="fontcolor"
+                      isLogged={props.isLogged}
+                      />
                 </ListItem>
             </List>
       </CardContent>
