@@ -5,6 +5,12 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import StepButton from "@mui/material/StepButton"; 
 import Grid from '@mui/material/Grid';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 const objectSteps = [
     {
@@ -42,35 +48,54 @@ function StatesSection(props) {
     const [nextStep, setNextStep] = React.useState("Starting up");
     const [nextStepColor, setNextStepColor] = React.useState("yellow");
     const [nextStepColorFont, setnextStepColorFont] = React.useState("black");
+    const [open, setOpen] = React.useState(false);
+
   
     const handleStep = (step) => () => { 
         setActiveStep(step); 
     }; 
 
     const goNextStep = () => {
-        console.log(activeStep);
         if (activeStep === 0) {
             setActiveStep(1);
-            setNextStep("Producing normally");
-            setNextStepColor("green");
-            setnextStepColorFont("white");
+            props.setHeaderColor(objectSteps[1].color);
+            setNextStep(objectSteps[2].name);
+            setNextStepColor(objectSteps[2].color);
+            setnextStepColorFont(objectSteps[2].fontColor);            
         } else if (activeStep === 1) {
             setActiveStep(2);
-            setNextStep("Winding down");
-            setNextStepColor("yellow");
-            setnextStepColorFont("black");
+            props.setHeaderColor(objectSteps[2].color);
+            setNextStep(objectSteps[3].name);
+            setNextStepColor(objectSteps[3].color);
+            setnextStepColorFont(objectSteps[3].fontColor);  
         } else if (activeStep === 2) {
             setActiveStep(3);
-            setNextStep("Standing Still");
-            setNextStepColor("red");
-            setnextStepColorFont("white");
+            props.setHeaderColor(objectSteps[3].color);
+            setNextStep(objectSteps[0].name);
+            setNextStepColor(objectSteps[0].color);
+            setnextStepColorFont(objectSteps[0].fontColor);  
         } else if (activeStep === 3) {
             setActiveStep(0);
-            setNextStep("Starting Up");
-            setNextStepColor("yellow");
-            setnextStepColorFont("black");
+            props.setHeaderColor(objectSteps[0].color);
+            setNextStep(objectSteps[1].name);
+            setNextStepColor(objectSteps[1].color);
+            setnextStepColorFont(objectSteps[1].fontColor);  
         }
     }
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleConfirm = () => {
+        goNextStep();
+        props.login();
+        setOpen(false);
+    };
 
     return (
             <Grid container spacing={2} alignItems="center">
@@ -85,6 +110,7 @@ function StatesSection(props) {
                                         disabled={!props.isLogged}
                                         icon={<><Circle color={obj.color}/></>} 
                                         color="inherit" 
+                                        key={obj.name}
                                         onClick={handleStep(index)}> 
                                         {obj.name} 
                                     </StepButton> 
@@ -101,8 +127,25 @@ function StatesSection(props) {
                         color: nextStepColorFont,
                         opacity: (props.isLogged) ? "1" : "0.5"}}
                     disabled={!props.isLogged}
-                    onClick={(e) => goNextStep()}>Next: {nextStep}</Button>
+                    onClick={(e) => handleClickOpen()}>Next: {nextStep}</Button>
                     </Box>
+                    <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"Confirm State Change"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Are you sure you want to change the state?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose}>No</Button>
+                            <Button onClick={handleConfirm} autoFocus>Yes</Button>
+                        </DialogActions>
+                    </Dialog>
                 </Grid>
             </Grid>
     );

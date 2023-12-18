@@ -33,7 +33,9 @@ function StatusSection(props) {
                       title="States"
                       color="secondary"
                       fontColor="fontcolor"
+                      setHeaderColor={props.setHeaderColor}
                       isLogged={props.isLogged}
+                      login={props.login}
                       />
                 </ListItem>
             </List>

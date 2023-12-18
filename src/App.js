@@ -14,10 +14,10 @@ import ordersData from './assets/orders.json';
 export default function Checkout() {
   const [isLogged, setIsLogged] = React.useState(false);
   const [orders, setOrders] = React.useState(ordersData);
+  const [headerColor, setHeaderColor] = React.useState('#e30613');
 
   const logginFucntion = () => {
     setIsLogged(!isLogged);
-    console.log(isLogged);
   }
   
   return (
@@ -25,7 +25,7 @@ export default function Checkout() {
       <CssBaseline />
       <AppBar
         position="absolute"
-        color="primary"
+        style={{ backgroundColor: headerColor,color:(headerColor==="yellow") ? "black" : "white" }}
         elevation={0}
         sx={{
           position: 'relative',
@@ -55,15 +55,17 @@ export default function Checkout() {
                 equipmentID={orders[0]?.equipmentID}
                 description={orders[0]?.description}
                 started="10/10/2021 10:00 AM"
-                color='#009641'
+                color='#3c3c3b'
                 fontColor="white"
                 isLogged={isLogged}
+                setHeaderColor={setHeaderColor}
+                login={logginFucntion}
                  />  
           </Grid>
           <Grid item xs={12} style={{marginTop:"20px"}}>
           <OrderSection 
                 title="Next Orders"
-                color='#009641'
+                color='#3c3c3b'
                 fontColor="white"
                 orders={orders}
                  />
